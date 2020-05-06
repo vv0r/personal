@@ -11,9 +11,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(unless (package-installed-p 'spacemacs-theme)
-  (package-refresh-contents)
-  (package-install 'spacemacs-theme))
+;(unless (package-installed-p 'spacemacs-theme)
+;  (package-refresh-contents)
+;  (package-install 'spacemacs-theme))
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "qutebrowser")
@@ -31,6 +31,11 @@
                            ))
 
 (electric-pair-mode t)
+
+(setq powerline-default-separator nil)
+
+(setq line-number-mode t)
+(setq column-number-mode t)
 
 (defun config-visit ()
   (interactive)
@@ -57,6 +62,118 @@
 (global-set-key (kbd "C-x b") 'ibuffer)
 
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+
+(use-package zerodark-theme
+  :ensure t
+  :init
+  (load-theme 'zerodark t))
+
+(let ((class '((class color) (min-colors 89)))
+      (default (if (true-color-p) "#abb2bf" "#afafaf"))
+      (light (if (true-color-p) "#ccd4e3" "#d7d7d7"))
+      (background (if (true-color-p) "#282c34" "#333333"))
+      (background-dark (if (true-color-p) "#24282f" "#222222"))
+      (background-darker (if (true-color-p) "#22252c" "#222222"))
+      (mode-line-inactive (if "#1c2129" "#222222"))
+      (mode-line-active (if (true-color-p) "#6f337e" "#875f87"))
+      (background-lighter (if (true-color-p) "#3a3f4b" "#5f5f5f"))
+      (background-red (if (true-color-p) "#4c3840" "#5f5f5f"))
+      (bright-background-red (if (true-color-p) "#744a5b" "#744a5b"))
+      (background-purple (if (true-color-p) "#48384c" "#5f5f5f"))
+      (background-blue (if (true-color-p) "#38394c" "#444444"))
+      (bright-background-blue (if (true-color-p) "#4e5079" "#4e5079"))
+      (background-green (if (true-color-p) "#3d4a41" "#5f5f5f"))
+      (bright-background-green (if (true-color-p) "#3f6d54" "#3f6d54"))
+      (background-orange (if (true-color-p) "#4a473d" "#5f5f5f"))
+      (hl-line (if (true-color-p) "#2c323b" "#333333"))
+      (grey (if (true-color-p) "#cccccc" "#cccccc"))
+      (grey-dark (if (true-color-p) "#666666" "#666666"))
+      (highlight (if (true-color-p) "#3e4451" "#5f5f5f"))
+      (comment (if (true-color-p) "#687080" "#707070"))
+      (orange (if (true-color-p) "#da8548" "#d7875f"))
+      (orange-light (if (true-color-p) "#ddbd78" "#d7af87"))
+      (red (if (true-color-p) "#ff6c6b" "#ff5f5f"))
+      (purple (if (true-color-p) "#c678dd" "#d787d7"))
+      (purple-dark (if (true-color-p) "#64446d" "#5f5f5f"))
+      (blue (if (true-color-p) "#61afef" "#5fafff"))
+      (blue-dark (if (true-color-p) "#1f5582" "#005f87"))
+      (green (if (true-color-p) "#98be65" "#87af5f"))
+      (green-light (if (true-color-p) "#9eac8c" "#afaf87"))
+      (peach "PeachPuff3")
+      (diff-added-background (if (true-color-p) "#284437" "#284437"))
+      (diff-added-refined-background (if (true-color-p) "#1e8967" "#1e8967"))
+      (diff-removed-background (if (true-color-p) "#583333" "#580000"))
+      (diff-removed-refined-background (if (true-color-p) "#b33c49" "#b33c49"))
+      (diff-current-background (if (true-color-p) "#29457b" "#29457b"))
+      (diff-current-refined-background (if (true-color-p) "#4174ae" "#4174ae")))
+
+  (custom-theme-set-faces
+   'zerodark
+
+   `(fancy-battery-charging ((,class (:background ,background-blue :height 1.0 :bold t))))
+   `(fancy-battery-discharging ((,class (:background ,background-blue :height 1.0))))
+   `(fancy-battery-critical ((,class (:background ,background-blue :height 1.0))))
+   
+   ;; mode line stuff
+   `(mode-line ((,class (:background ,background-blue :height 1.0 :foreground ,blue
+                                     :distant-foreground ,background-blue
+                                     :box ,(when zerodark-use-paddings-in-mode-line
+                                             (list :line-width 6 :color background-blue))))))
+   
+   `(mode-line-inactive ((,class (:background ,background-blue :height 1.0 :foreground ,default
+                                              :distant-foreground ,background-blue
+                                              :box ,(when zerodark-use-paddings-in-mode-line
+                                                      (list :line-width 6 :color background-blue))))))
+
+   `(header-line ((,class (:inherit mode-line-inactive))))
+
+   `(powerline-active0 ((,class (:height 1.0 :foreground ,blue :background ,background-blue
+                                         :distant-foreground ,background-blue))))
+   `(powerline-active1 ((,class (:height 1.0 :foreground ,blue :background ,background-blue
+                                         :distant-foreground ,background-blue))))
+   `(powerline-active2 ((,class (:height 1.0 :foreground ,blue :background ,background-blue
+                                         :distant-foreground ,background-blue))))
+   `(powerline-inactive0 ((,class (:height 1.0 :foreground ,blue :background ,background-blue
+                                           :distant-foreground ,background-blue))))
+   `(powerline-inactive1 ((,class (:height 1.0 :foreground ,blue :background ,background-blue
+                                           distant-foreground ,background-blue))))
+   `(powerline-inactive2 ((,class (:height 1.0 :foreground ,blue :background ,background-blue
+                                           :distant-foreground ,background-blue))))
+
+   `(dashboard-heading-face ((,class (:background ,background :foreground ,blue
+                                                  :bold t :height 1.2))))
+   `(dashboard-banner-logo-title-face ((,class (:background ,background :foreground ,blue
+                                                            :bold t :height 1.2))))
+   `(widget-button ((,class (:background ,background :foreground ,default :bold nil
+                                         :underline t :height 0.9))))
+   
+   ;; erc stuff
+   `(erc-nick-default-face ((,class :foreground ,blue :background ,background :weight bold)))
+
+   ;; org stuff
+   `(outline-1 ((,class (:foreground ,blue :weight bold :height 1.8 :bold nil))))
+   `(outline-2 ((,class (:foreground ,purple :weight bold :height 1.7 :bold nil))))
+   `(outline-3 ((,class (:foreground ,peach :weight bold :height 1.6 :bold nil))))
+   `(outline-4 ((,class (:foreground ,green-light :weight bold :height 1.5 :bold nil))))
+   `(outline-5 ((,class (:foreground ,blue :weight bold :height 1.4 :bold nil))))
+   `(outline-6 ((,class (:foreground ,purple :weight bold :height 1.3 :bold nil))))
+   `(outline-7 ((,class (:foreground ,peach :weight bold :height 1.2 :bold nil))))
+   `(outline-8 ((,class (:foreground ,green-light :weight bold :height 1.1 :bold nil))))
+   
+   `(org-block-begin-line ((,class (:background ,background-blue :foreground ,blue
+                                                :bold t :height 1.0))))
+   `(org-block-end-line ((,class (:background ,background-blue :foreground ,blue
+                                              :bold t :height 1.0))))))
+
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+(use-package async
+  :ensure t
+  :init (dired-async-mode 1))
 
 (use-package helm
   :ensure t
@@ -232,73 +349,8 @@
 (use-package flycheck
   :ensure t)
 
-(use-package company
-  :ensure t
-  :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3))
-
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "M-n") nil)
-  (define-key company-active-map (kbd "M-p") nil)
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (define-key company-active-map (kbd "SPC") #'company-abort))
-
-(add-hook 'python-mode-hook 'yas-minor-mode)
-(add-hook 'python-mode-hook 'flycheck-mode)
-
-(with-eval-after-load 'company
-    (add-hook 'python-mode-hook 'company-mode))
-
-(use-package company-jedi
-  :ensure t
-  :config
-    (require 'company)
-    (add-to-list 'company-backends 'company-jedi))
-
-(defun python-mode-company-init ()
-  (setq-local company-backends '((company-jedi
-                                  company-etags
-                                  company-dabbrev-code))))
-
-(use-package company-jedi
-  :ensure t
-  :config
-    (require 'company)
-    (add-hook 'python-mode-hook 'python-mode-company-init))
-
-(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-(add-hook 'emacs-lisp-mode-hook 'yas-minor-mode)
-(add-hook 'emacs-lisp-mode-hook 'company-mode)
-
-(use-package slime
-  :ensure t
-  :config
-  (setq inferior-lisp-program "/usr/bin/sbcl")
-  (setq slime-contribs '(slime-fancy)))
-
-(use-package slime-company
-  :ensure t
-  :init
-    (require 'company)
-    (slime-setup '(slime-fancy slime-company)))
-
 (add-hook 'shell-mode-hook 'yas-minor-mode)
 (add-hook 'shell-mode-hook 'flycheck-mode)
-(add-hook 'shell-mode-hook 'company-mode)
-
-(defun shell-mode-company-init ()
-  (setq-local company-backends '((company-shell
-                                  company-shell-env
-                                  company-etags
-                                  company-dabbrev-code))))
-
-(use-package company-shell
-  :ensure t
-  :config
-    (require 'company)
-    (add-hook 'shell-mode-hook 'shell-mode-company-init))
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -324,13 +376,31 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (spacemacs-dark)))
+ '(custom-enabled-themes (quote (zerodark)))
  '(custom-safe-themes
    (quote
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX+" . "#dc752f")
+     ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (magit company-shell slime-company company-jedi company flycheck yasnippet-snippets yasnippet expand-region mark-multiple helm linum-relative projectile emms popup-kill-ring exwm spaceline dashboard rainbow-delimiters sudo-edit switch-window rainbow-mode smex ido-vertical-mode org-bullets beacon which-key use-package spacemacs-theme))))
+    (zerodark-theme magit company-shell slime-company company-jedi company flycheck yasnippet-snippets yasnippet expand-region mark-multiple helm linum-relative projectile emms popup-kill-ring exwm spaceline dashboard rainbow-delimiters sudo-edit switch-window rainbow-mode smex ido-vertical-mode org-bullets beacon which-key use-package spacemacs-theme)))
+ '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
